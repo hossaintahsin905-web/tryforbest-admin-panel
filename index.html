@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অ্যাডমিন প্যানেল - নব জাগরণ ব্লাড ডোনেট</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Hind+Siliguri:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* আপনার CSS কোড এখানে অপরিবর্তিত থাকবে */
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Login Page Styles */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .auth-form {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-header {
+            background-color: #a42a2a;
+            color: #f0ebeb;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .form-body {
+            padding: 40px;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .form-body h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 10px;
+            background-color: #e9ecef;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: #343a40;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Admin Panel Styles */
+        #admin-panel {
+            padding: 20px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #a42a2a;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .panel-header h1 {
+            font-family: 'Hind Siliguri', sans-serif;
+            color: #343a40;
+            margin: 0;
+        }
+
+        #logout-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #a42a2a;
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h3 {
+            margin: 0 0 10px 0;
+            color: #a42a2a;
+        }
+
+        .stat-card p {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: #343a40;
+        }
+
+        .management-section {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .management-section h2 {
+            border-bottom: 2px solid #a42a2a;
+            padding-bottom: 10px;
+            margin-top: 0;
+            color: #a42a2a;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: 700;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-right: 5px;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
+        .fulfill-btn {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Admin Login Page -->
+    <div id="admin-login-page" class="auth-container">
+        <div class="auth-form">
+            <div class="form-header">
+                <h1>নব জাগরণ ব্লাড ডোনেট</h1>
+                <p>অ্যাডমিন প্যানেল</p>
+            </div>
+            <div class="form-body">
+                <h2>Admin Login</h2>
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label for="admin-email">EMAIL</label>
+                        <input type="email" id="admin-email" placeholder="admin@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-password">PASSWORD</label>
+                        <input type="password" id="admin-password" placeholder="password" required>
+                    </div>
+                    <button type="submit" class="form-button">Log in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="hidden">
+        <div class="panel-header">
+            <h1>অ্যাডমিন ড্যাশবোর্ড</h1>
+            <button id="logout-btn">Logout</button>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <h3>মোট নিবন্ধিত ব্যবহারকারী</h3>
+                <p id="total-users-stat">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>রক্তের আবেদন</h3>
+                <p id="total-requests-stat">0</p>
+            </div>
+        </div>
+
+        <div class="management-section">
+            <h2>ব্যবহারকারী ব্যবস্থাপনা</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>নাম</th>
+                        <th>ইমেইল</th>
+                        <th>মোবাইল নম্বর</th>
+                        <th>জন্ম তারিখ</th>
+                        <th>কার্যক্রম</th>
+                    </tr>
+                </thead>
+                <tbody id="user-table-body"></tbody>
+            </table>
+        </div>
+
+        <div class="management-section">
+            <h2>রক্তের আবেদন ব্যবস্থাপনা</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>রোগীর নাম</th>
+                        <th>রক্তের গ্রুপ</th>
+                        <th>হাসপাতালের ঠিকানা</th>
+                        <th>অবস্থা (Status)</th>
+                        <th>কার্যক্রম</th>
+                    </tr>
+                </thead>
+                <tbody id="request-table-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase SDK v9 (Modular) -->
+    <script type="module">
+        // Import functions from the SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+        // আপনার নতুন Firebase প্রজেক্টের কনফিগারেশন
+        const firebaseConfig = {
+            apiKey: "AIzaSyBIMtHysqCklicjN0Zb_4DYm-qdWxvSYbc",
+            authDomain: "tryforbest-admin.firebaseapp.com",
+            projectId: "tryforbest-admin",
+            storageBucket: "tryforbest-admin.firebasestorage.app",
+            messagingSenderId: "565910477659",
+            appId: "1:565910477659:web:9a861826d02b61474c187e",
+            measurementId: "G-7SRXJ7L10C"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const loginPage = document.getElementById('admin-login-page');
+        const adminPanel = document.getElementById('admin-panel');
+        const loginForm = document.getElementById('admin-login-form');
+        const logoutBtn = document.getElementById('logout-btn');
+        const userTableBody = document.getElementById('user-table-body');
+        const requestTableBody = document.getElementById('request-table-body');
+        const totalUsersStat = document.getElementById('total-users-stat');
+        const totalRequestsStat = document.getElementById('total-requests-stat');
+
+        // --- Auth State Management ---
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                loginPage.classList.add('hidden');
+                adminPanel.classList.remove('hidden');
+                populateDashboard();
+            } else {
+                adminPanel.classList.add('hidden');
+                loginPage.classList.remove('hidden');
+            }
+        });
+
+        // --- Login/Logout Logic ---
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .catch(error => {
+                    alert('লগইন ব্যর্থ: ' + error.message);
+                });
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth).catch(error => {
+                alert('লগআউট ব্যর্থ: ' + error.message);
+            });
+            loginForm.reset();
+        });
+
+        // --- Dashboard Population ---
+        function populateDashboard() {
+            populateUserTable();
+            populateRequestTable();
+        }
+
+        // ব্যবহারকারী টেবিল লোড করার জন্য পরিবর্তিত কোড (Firestore থেকে)
+        function populateUserTable() {
+            const usersCol = collection(db, 'users');
+            onSnapshot(usersCol, (snapshot) => {
+                userTableBody.innerHTML = '';
+                let userCount = 0;
+                snapshot.forEach(doc => {
+                    const user = doc.data();
+                    const row = `
+                        <tr>
+                            <td>${user.name || 'N/A'}</td>
+                            <td>${user.email || 'N/A'}</td>
+                            <td>${user.mobile || 'N/A'}</td>
+                            <td>${user.dob || 'N/A'}</td>
+                            <td>
+                                <button class="action-btn delete-btn delete-user-btn" data-id="${doc.id}">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                    userTableBody.innerHTML += row;
+                    userCount++;
+                });
+                totalUsersStat.textContent = userCount;
+                if (userCount === 0) {
+                    userTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">কোনো ব্যবহারকারী পাওয়া যায়নি।</td></tr>';
+                }
+            });
+        }
+
+        // রক্তের আবেদন টেবিল লোড করার জন্য পরিবর্তিত কোড (Firestore থেকে)
+        function populateRequestTable() {
+            const requestsCol = collection(db, 'bloodRequests');
+            onSnapshot(requestsCol, (snapshot) => {
+                requestTableBody.innerHTML = '';
+                let requestCount = 0;
+                snapshot.forEach(doc => {
+                    const request = doc.data();
+                    const status = request.status || 'Pending';
+                    const row = `
+                        <tr>
+                            <td>${request.patientName}</td>
+                            <td>${request.bloodGroup}</td>
+                            <td>${request.location}</td>
+                            <td>${status}</td>
+                            <td>
+                                ${status === 'Pending' ? `<button class="action-btn fulfill-btn fulfill-request-btn" data-id="${doc.id}">Fulfill</button>` : ''}
+                                <button class="action-btn delete-btn delete-request-btn" data-id="${doc.id}">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                    requestTableBody.innerHTML += row;
+                    requestCount++;
+                });
+                totalRequestsStat.textContent = requestCount;
+                if (requestCount === 0) {
+                    requestTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">কোনো আবেদন পাওয়া যায়নি।</td></tr>';
+                }
+            });
+        }
+
+        // --- Action Handling (Event Delegation) ---
+        userTableBody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-user-btn')) {
+                const userId = e.target.getAttribute('data-id');
+                if (confirm('আপনি কি এই ব্যবহারকারীকে মুছে ফেলতে চান?')) {
+                    deleteUser(userId);
+                }
+            }
+        });
+
+        requestTableBody.addEventListener('click', (e) => {
+            const target = e.target;
+            const requestId = target.getAttribute('data-id');
+            if (target.classList.contains('delete-request-btn')) {
+                if (confirm('আপনি কি এই আবেদনটি মুছে ফেলতে চান?')) {
+                    deleteRequest(requestId);
+                }
+            } else if (target.classList.contains('fulfill-request-btn')) {
+                fulfillRequest(requestId);
+            }
+        });
+
+        // --- Data Manipulation Functions (Firestore এর জন্য পরিবর্তিত) ---
+        async function deleteUser(userId) {
+            try {
+                await deleteDoc(doc(db, 'users', userId));
+            } catch (error) {
+                console.error("Error removing user: ", error);
+                alert("ব্যবহারকারীকে মোছা সম্ভব হয়নি।");
+            }
+        }
+
+        async function deleteRequest(requestId) {
+            try {
+                await deleteDoc(doc(db, 'bloodRequests', requestId));
+            } catch (error) {
+                console.error("Error removing request: ", error);
+                alert("আবেদনটি মোছা সম্ভব হয়নি।");
+            }
+        }
+
+        async function fulfillRequest(requestId) {
+            const requestRef = doc(db, 'bloodRequests', requestId);
+            try {
+                await updateDoc(requestRef, {
+                    status: 'Fulfilled'
+                });
+            } catch (error) {
+                console.error("Error updating request: ", error);
+                alert("আবেদনটি আপডেট করা সম্ভব হয়নি।");
+            }
+        }
+    </script>
+</body>
+
+</html>
